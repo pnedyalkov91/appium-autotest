@@ -1,11 +1,9 @@
 package Utils;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -16,21 +14,22 @@ public class Calculations extends setup.SetupAppium {
 
 
     /**
-     * Method for clearing calculator.
+     * Clear MIUI calculator
      */
     public static void clearCalculator() {
         if (!Objects.equals(driver.findElement(By.id(expression)).getAttribute("content-desc"), "0")) {
             driver.findElement(By.id(btnClear)).click();
             if (Objects.equals(driver.findElement(By.id(expression)).getAttribute("content-desc"), "0")) {
-                System.out.println("The calculator is cleared");
+                System.out.println("Calculator is cleared");
             }
         } else {
-            System.out.println("Тhe calculator has already been reset");
+            System.out.println("Calculator has already been reset");
         }
     }
 
     /**
-     * Addition two terms using MIUI calculator and Java. After that compare them.
+     * Calculate two terms using MIUI calculator and Java. After that compare results between Java calculation and
+     * MIUI calculator.
      *
      * @param termOne  - Term one.
      * @param termTwo  - Term two.
@@ -68,14 +67,17 @@ public class Calculations extends setup.SetupAppium {
         driver.findElement(By.id(btnEquals)).click();
 
         // Compare results between Java calculation and MIUI calculator
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
-        if (driver.findElement(By.id(resultField)).getAttribute("text").equals("= Can't divide by zero") && javaResult == Double.POSITIVE_INFINITY) {
-            Assert.assertTrue(true, "Can't divide by zero");
-        } else {
-            compareResults(javaResult);
-        }
+        compareResults(javaResult);
     }
 
+    /**
+     * Calculate two terms using MIUI calculator and Java. After that compare results between Java calculation and
+     * MIUI calculator.
+     *
+     * @param term - Input data
+     * @param terms - How many terms will be used.
+     * @param operator - Use the following operators: +, -, *, /.
+     */
     public static void calculateNumbers(int term, int terms, String operator) {
         double javaResult = 0.0;
 
@@ -115,12 +117,7 @@ public class Calculations extends setup.SetupAppium {
         driver.findElement(By.id(btnEquals)).click();
 
         // Compare result between Java calculation and MIUI calculator
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
-        if (driver.findElement(By.id(resultField)).getAttribute("text").equals("= Can't divide by zero") && javaResult == Double.POSITIVE_INFINITY) {
-            Assert.assertTrue(true, "Can't divide by zero");
-        } else {
-            compareResults(javaResult);
-        }
+        compareResults(javaResult);
     }
 
     /**
@@ -132,16 +129,6 @@ public class Calculations extends setup.SetupAppium {
         String strResult = driver.findElement(By.id(resultField)).getAttribute("text");
         strResult = strResult.replaceAll("[^\\d-e.]", "");
         return Double.parseDouble(strResult);
-    }
-
-    /**
-     * Compare results between Java calculation and MIUI calculator.
-     *
-     * @param javaResult - Result from Java calculations. It's compared to result from MIUI Calculator.
-     */
-    private static void compareResults(double javaResult) {
-        double result = getResult();
-        Assert.assertEquals(Math.floor(result), Math.floor(javaResult));
     }
 
     /**
@@ -161,16 +148,24 @@ public class Calculations extends setup.SetupAppium {
      */
     public static String randomCalculations() {
         String[] calculations = {"+", "-", "*", "/"};
-        return calculations[3];
+        Random random = new Random();
+        int index = random.nextInt(calculations.length);
+        return calculations[index];
     }
 
     /**
-     * Count buttons number in the application
+     * Compare results between Java calculation and MIUI calculator..
      *
-     * @return buttons number.
+     * @param javaResult - Result from Java calculations. It's compared to result from MIUI Calculator
      */
-    private static int getButtonsNumber(String className) {
-        List<WebElement> listOfElements = driver.findElements(By.className(className));
-        return listOfElements.size() - 1;
+    private static void compareResults(double javaResult) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        if (driver.findElement(By.id(resultField)).getAttribute("text").equals("= Can't divide by zero")
+                && javaResult == Double.POSITIVE_INFINITY) {
+            Assert.assertTrue(true, "Can't divide by zero");
+        } else {
+            double result = getResult();
+            Assert.assertEquals(Math.floor(result), Math.floor(javaResult));
+        }
     }
 }
