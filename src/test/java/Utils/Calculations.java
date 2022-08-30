@@ -10,7 +10,7 @@ import java.util.Random;
 import static Constants.MobileElementsIDs.*;
 import static Utils.Buttons.clickBtnDigit;
 
-public class Calculations extends setup.SetupAppium {
+public class Calculations extends Setup.SetupAppium {
 
 
     /**
@@ -25,6 +25,23 @@ public class Calculations extends setup.SetupAppium {
         } else {
             System.out.println("Calculator has already been reset");
         }
+    }
+
+    public static void calculatePercent() {
+        // Clear calculator
+        clearCalculator();
+
+        // Get random number and parse it to int
+        int randomNumbers = getRandomInt();
+
+        // Click the saved number on buttons
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnPercent)).click();
+        double calcResult = getResult();
+        double javaCalculation = randomNumbers / 100.0;
+
+        // Compare results between calculator and Java
+        Assert.assertEquals(calcResult, javaCalculation);
     }
 
     /**
@@ -125,7 +142,7 @@ public class Calculations extends setup.SetupAppium {
      *
      * @return result from MIUI Calculator.
      */
-    private static double getResult() {
+    public static double getResult() {
         String strResult = driver.findElement(By.id(resultField)).getAttribute("text");
         strResult = strResult.replaceAll("[^\\d-e.]", "");
         return Double.parseDouble(strResult);
@@ -136,9 +153,9 @@ public class Calculations extends setup.SetupAppium {
      *
      * @return - generating a random number 1 - 100.
      */
-    public static int getRandomInt(int bound) {
+    public static int getRandomInt() {
         Random random = new Random();
-        return random.nextInt(bound) + 1;
+        return random.nextInt(20);
     }
 
     /**
@@ -146,11 +163,11 @@ public class Calculations extends setup.SetupAppium {
      *
      * @return random operation.
      */
-    public static String randomCalculations() {
-        String[] calculations = {"+", "-", "*", "/"};
+    public static String getRandomOperation() {
+        String[] operations = {"+", "-", "*", "/"};
         Random random = new Random();
-        int index = random.nextInt(calculations.length);
-        return calculations[index];
+        int index = random.nextInt(operations.length);
+        return operations[index];
     }
 
     /**
@@ -165,7 +182,7 @@ public class Calculations extends setup.SetupAppium {
             Assert.assertTrue(true, "Can't divide by zero");
         } else {
             double result = getResult();
-            Assert.assertEquals(Math.floor(result), Math.floor(javaResult));
+            Assert.assertEquals(Math.ceil(result), Math.ceil(javaResult));
         }
     }
 }

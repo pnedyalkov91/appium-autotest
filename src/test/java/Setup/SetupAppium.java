@@ -1,7 +1,5 @@
-package setup;
+package Setup;
 
-import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileCommand;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterTest;
@@ -10,7 +8,6 @@ import org.testng.annotations.BeforeTest;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 import static Constants.AppiumCapabilities.*;
 

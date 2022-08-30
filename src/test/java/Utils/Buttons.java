@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Constants.MobileElementsIDs.*;
-import static Constants.TestConstants.*;
+import static Constants.TestConstants.digitsInCalculator;
 
-public class Buttons extends setup.SetupAppium {
+public class Buttons extends Setup.SetupAppium {
 
     /**
      * Transform input data from btnNum and click on digit buttons. For example: Our input is 12345 and this method
@@ -92,6 +92,9 @@ public class Buttons extends setup.SetupAppium {
         return digitElements;
     }
 
+    /**
+     * Check enabled and displayed buttons
+     */
     public static void checkButtons() {
         String buttons;
         for (int clickable = 0; clickable <= calcButtonsScientific().length - 1; clickable++) {
@@ -114,11 +117,7 @@ public class Buttons extends setup.SetupAppium {
      */
     public static void checkIfButtonIsEnabled(String buttonId) {
         boolean isButtonEnabled = driver.findElement(By.id(buttonId)).isEnabled();
-        if (isButtonEnabled) {
-            Assert.assertTrue(true,"The button is enabled");
-        } else {
-            Assert.fail("The button is disabled");
-        }
+        Assert.assertTrue(isButtonEnabled, "The button has correct attributes");
     }
 
     /**
@@ -126,12 +125,8 @@ public class Buttons extends setup.SetupAppium {
      *
      * @param buttonId - Select button for testing
      */
-    public static void checkIfButtonIsDisplayed(String buttonId) {
-        boolean isButtonEnabled = driver.findElement(By.id(buttonId)).isEnabled();
-        if (isButtonEnabled) {
-            Assert.assertTrue(true,"The button is displayed");
-        } else {
-            Assert.fail("The button is not displayed");
-        }
+    public static void checkIfButtonIsDisplayed (String buttonId) {
+        boolean isButtonDisplayed = driver.findElement(By.id(buttonId)).isDisplayed();
+            Assert.assertTrue(isButtonDisplayed,"The button is displayed");
     }
 }
