@@ -11,7 +11,6 @@ import static Constants.TestConstants.testRepetition;
 import static Utils.Buttons.*;
 import static Utils.Calculations.*;
 
-
 public class TestCases extends Setup.SetupAppium {
 
     @Test(priority = 1)
@@ -22,41 +21,21 @@ public class TestCases extends Setup.SetupAppium {
 
         // Simple mode
         // Check symbol buttons in simple mode
-        if (symbolButtons == calcButtonsSimple().length) {
-            Assert.assertTrue(true, "Symbol buttons count is correct");
-        } else {
-            Assert.fail("Symbol buttons count is not correct. The expected number should be " +
-                    calcButtonsSimple().length);
-        }
+        Assert.assertEquals(calcButtonsSimple().length, symbolButtons, "Symbol buttons count is correct");
 
         // Check digit buttons in simple mode
-        if (calcDigitButtonsSimple().size() == digitButtonsInCalc) {
-            Assert.assertTrue(true, "Digit buttons count is correct");
-        } else {
-            Assert.fail("Digit buttons count is not correct. The expected number should be " +
-                    calcDigitButtonsSimple().size());
-        }
+        Assert.assertEquals(digitButtonsInCalc, calcDigitButtonsSimple().size(), "Digit buttons count is correct");
 
         // Check symbol buttons in scientific mode
         driver.findElement(By.id(switchToScienceCalcBtn)).click();
         symbolButtons = getButtonsNumber("android.widget.ImageView");
-        if (symbolButtons == calcButtonsScientific().length) {
-            Assert.assertTrue(true, "Symbol buttons count is correct");
-        } else {
-            Assert.fail("Symbol buttons count is not correct. The expected number should be " +
-                    calcButtonsSimple().length);
-        }
+        Assert.assertEquals(calcButtonsScientific().length, symbolButtons, "Symbol buttons count is correct");
+
 
         // Check digit buttons in scientific mode
         digitButtonsInCalc = getButtonsNumber("android.widget.TextView");
-        if (digitButtonsScientific().size() == digitButtonsInCalc) {
-            Assert.assertTrue(true, "Digit buttons count is correct");
-        } else {
-            Assert.fail("Digit buttons count is not correct. The expected number should be " +
-                    digitButtonsScientific().size());
-        }
+        Assert.assertEquals(digitButtonsInCalc, digitButtonsScientific().size(), "Digit buttons count is correct");
     }
-
     @Test(priority = 2)
     public void checkButtonsAttributes() {
         checkButtons();

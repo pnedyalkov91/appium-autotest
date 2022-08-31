@@ -53,38 +53,43 @@ public class Calculations extends Setup.SetupAppium {
      * @param operator - Use the following operators: +, -, *, /.
      */
     public static void calculateTwoNumbers(int termOne, int termTwo, String operator) {
-        double javaResult = 0.0;
+        double result = 0.0;
 
         switch (operator) {
             case "+" -> {
                 clickBtnDigit(termOne);
                 driver.findElement(By.id(btnPlus)).click();
                 clickBtnDigit(termTwo);
-                javaResult = termOne + termTwo;
+                result = termOne + termTwo;
             }
             case "-" -> {
                 clickBtnDigit(termOne);
                 driver.findElement(By.id(btnMinus)).click();
                 clickBtnDigit(termTwo);
-                javaResult = termOne - termTwo;
+                result = termOne - termTwo;
             }
             case "*" -> {
                 clickBtnDigit(termOne);
                 driver.findElement(By.id(btnMultiply)).click();
                 clickBtnDigit(termTwo);
-                javaResult = termOne * termTwo;
+                result = termOne * termTwo;
             }
             case "/" -> {
                 clickBtnDigit(termOne);
                 driver.findElement(By.id(btnDivide)).click();
                 clickBtnDigit(termTwo);
-                javaResult = termOne * 1.0 / termTwo;
+                result = termOne * 1.0 / termTwo;
             }
         }
         driver.findElement(By.id(btnEquals)).click();
 
         // Compare results between Java calculation and MIUI calculator
-        compareResults(javaResult);
+        // Compare result between Java calculation and MIUI calculator
+        if (result == Double.POSITIVE_INFINITY) {
+            divideByZero(result);
+        } else {
+            compareResults(result);
+        }
     }
 
     /**
@@ -96,45 +101,49 @@ public class Calculations extends Setup.SetupAppium {
      * @param operator - Use the following operators: +, -, *, /.
      */
     public static void calculateNumbers(int term, int terms, String operator) {
-        double javaResult = 0.0;
+        double result = 0.0;
 
         switch (operator) {
             case "+" -> {
                 for (int termsCount = 0; termsCount <= terms - 1; termsCount++) {
                     clickBtnDigit(term);
                     driver.findElement(By.id(btnPlus)).click();
-                    javaResult += term;
+                    result += term;
                 }
             }
             case "-" -> {
-                javaResult = term * 2;
+                result = term * 2;
                 for (int termsCount = 0; termsCount <= terms - 1; termsCount++) {
                     clickBtnDigit(term);
                     driver.findElement(By.id(btnMinus)).click();
-                    javaResult -= term;
+                    result -= term;
                 }
             }
             case "*" -> {
-                javaResult = 1;
+                result = 1;
                 for (int termsCount = 0; termsCount <= terms - 1; termsCount++) {
                     clickBtnDigit(term);
                     driver.findElement(By.id(btnMultiply)).click();
-                    javaResult *= term;
+                    result *= term;
                 }
             }
             case "/" -> {
-                javaResult = term  * 10;
+                result = term  * 10;
                 for (int termsCount = 0; termsCount <= terms - 1; termsCount++) {
                     clickBtnDigit(term);
                     driver.findElement(By.id(btnDivide)).click();
-                    javaResult /= term;
+                    result /= term;
                 }
             }
         }
         driver.findElement(By.id(btnEquals)).click();
 
         // Compare result between Java calculation and MIUI calculator
-        compareResults(javaResult);
+        if (result == Double.POSITIVE_INFINITY) {
+            divideByZero(result);
+        } else {
+            compareResults(result);
+        }
     }
 
     /**
@@ -171,18 +180,23 @@ public class Calculations extends Setup.SetupAppium {
     }
 
     /**
+     * Compare divide by zero between Java calculation and MIUI calculator..
+     *
+     * @param resultFromJava - Result from Java calculations. It's compared to result from MIUI Calculator
+     */
+    private static void divideByZero(double resultFromJava) {
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
+        Assert.assertTrue(driver.findElement(By.id(resultField)).getAttribute("text")
+                .equals("= Can't divide by zero") && resultFromJava == Double.POSITIVE_INFINITY);
+    }
+
+    /**
      * Compare results between Java calculation and MIUI calculator..
      *
-     * @param javaResult - Result from Java calculations. It's compared to result from MIUI Calculator
+     * @param resultFromJava - Result from Java calculations. It's compared to result from MIUI Calculator
      */
-    private static void compareResults(double javaResult) {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
-        if (driver.findElement(By.id(resultField)).getAttribute("text").equals("= Can't divide by zero")
-                && javaResult == Double.POSITIVE_INFINITY) {
-            Assert.assertTrue(true, "Can't divide by zero");
-        } else {
+        public static void compareResults (double resultFromJava) {
             double result = getResult();
-            Assert.assertEquals(Math.ceil(result), Math.ceil(javaResult));
+            Assert.assertEquals(Math.ceil(result), Math.ceil(resultFromJava));
         }
     }
-}
