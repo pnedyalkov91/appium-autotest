@@ -3,6 +3,7 @@ package Utils;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 
+import java.text.DecimalFormat;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.Random;
@@ -241,21 +242,21 @@ public class Calculations extends Setup.SetupAppium {
     /**
      * Calculate Pow
      *
-     * @param termOne  - Input int for term one.
-     * @param termTwo  - Input int for term two.
      */
-    public static void calculatePow (int termOne, int termTwo) {
+    public static void calculatePow () {
         double javaResult;
         clearCalculator();
+        Random random = new Random();
+        int randomNumbers = random.nextInt(9);
 
         // Calculate with Calculator
-        clickBtnDigit(termOne);
+        clickBtnDigit(randomNumbers);
         driver.findElement(By.id(btnPow)).click();
-        clickBtnDigit(termTwo);
+        clickBtnDigit(randomNumbers);
         driver.findElement(By.id(btnEquals)).click();
 
         // Calculate with Java
-        javaResult = Math.pow(termOne, termTwo);
+        javaResult = Math.pow(randomNumbers, randomNumbers);
 
         //Compare results
         compareResults(javaResult);
@@ -312,7 +313,7 @@ public class Calculations extends Setup.SetupAppium {
         driver.findElement(By.id(btnEquals)).click();
 
         // Calculate with Java
-        double javaResult = Math.sin(randomNumbers);
+        double javaResult = Math.sin(Math.toRadians(randomNumbers));
         compareResults(javaResult);
 
 
@@ -323,7 +324,7 @@ public class Calculations extends Setup.SetupAppium {
         driver.findElement(By.id(btnEquals)).click();
 
         // Calculate with Java
-        javaResult = Math.cos(randomNumbers);
+        javaResult = Math.cos(Math.toRadians(randomNumbers));
         compareResults(javaResult);
 
 
@@ -334,7 +335,7 @@ public class Calculations extends Setup.SetupAppium {
         driver.findElement(By.id(btnEquals)).click();
 
         // Calculate with Java
-        javaResult = Math.tan(randomNumbers);
+        javaResult = Math.tan(Math.toRadians(randomNumbers));
         compareResults(javaResult);
     }
 
@@ -455,13 +456,14 @@ public class Calculations extends Setup.SetupAppium {
      * @param javaResult - Result from Java calculations. It's compared to result from MIUI Calculator
      */
     private static void compareResults(double javaResult) {
+        DecimalFormat df = new DecimalFormat("##.##");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         if (driver.findElement(By.id(resultField)).getAttribute("text").equals("= Can't divide by zero")
                 && javaResult == Double.POSITIVE_INFINITY) {
             Assert.assertTrue(true, "Can't divide by zero");
         } else {
             double result = getResult();
-            Assert.assertEquals(Math.ceil(result), Math.ceil(javaResult));
+            Assert.assertEquals(df.format(result), df.format(javaResult));
         }
     }
 }

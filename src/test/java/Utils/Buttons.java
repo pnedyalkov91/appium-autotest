@@ -9,6 +9,7 @@ import java.util.List;
 
 import static Constants.MobileElementsIDs.*;
 import static Constants.TestConstants.digitsInCalculator;
+import static Utils.Calculations.*;
 
 public class Buttons extends Setup.SetupAppium {
 
@@ -96,6 +97,7 @@ public class Buttons extends Setup.SetupAppium {
      * Check enabled and displayed buttons
      */
     public static void checkButtons() {
+        clearCalculator();
         String buttons;
         for (int clickable = 0; clickable <= calcButtonsScientific().length - 1; clickable++) {
             buttons = calcButtonsScientific()[clickable];

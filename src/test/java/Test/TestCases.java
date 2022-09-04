@@ -17,6 +17,7 @@ public class TestCases extends Setup.SetupAppium {
     public void checkCalculatorButtons() {
 
         // Detect calculator view
+        clearCalculator();
         boolean calculatorDisplayed = driver.findElement(By.id(calculatorView)).isDisplayed();
         Assert.assertTrue(calculatorDisplayed, "Calculator view is displayed");
         boolean tabBarDisplayed = driver.findElement(By.id(actionTabBar)).isDisplayed();
@@ -104,13 +105,11 @@ public class TestCases extends Setup.SetupAppium {
 
     @Test(priority =  8)
     public void specialCalculations () {
-        driver.findElement(By.id(switchToScienceCalcBtn)).click();
-
         for (int i = 1; i <= testRepetition; i++) {
-            calculateWithBrackets(getRandomInt(), getRandomInt(), getRandomInt());
             calculateTrigonometricFunctions();
+            calculateWithBrackets(getRandomInt(), getRandomInt(), getRandomInt());
             calculateLogarithms();
-            calculatePow(getRandomInt(), getRandomInt());
+            calculatePow();
             calculateSquareRoot(getRandomInt());
             calculateFactorial();
             calculateReciprocal(getRandomInt());
