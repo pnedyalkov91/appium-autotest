@@ -1,13 +1,17 @@
 package Setup;
 
 import io.appium.java_client.android.AndroidDriver;
+import org.apache.commons.lang3.SystemUtils;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Objects;
 
 import static Constants.AppiumCapabilities.*;
 
@@ -18,8 +22,38 @@ public class SetupAppium {
     public static DesiredCapabilities cap;
     public static AndroidDriver driver;
 
+    public static void main(String[] args) {
+        System.out.printf(SystemUtils.OS_NAME);
+    }
     @BeforeTest
     public void setupAppiumDriver() throws MalformedURLException {
+
+        // Workaround if we receive "SessionNotCreatedException: Could not start a new session. Response code 500."
+        if (Objects.equals(SystemUtils.OS_NAME, "Linux")) {
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder();
+                processBuilder.command("bash", "-c", "adb uninstall io.appium.uiautomator2.server.test");
+                processBuilder.start();
+                processBuilder.command("bash", "-c", "adb uninstall io.appium.uiautomator2.server");
+                processBuilder.start();
+            }
+            catch(SessionNotCreatedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            try {
+                ProcessBuilder processBuilder = new ProcessBuilder();
+                processBuilder.command("cmd.exe", "/c", "adb uninstall io.appium.uiautomator2.server.test");
+                processBuilder.start();
+                processBuilder.command("cmd.exe", "/c", "adb uninstall io.appium.uiautomator2.server");
+                processBuilder.start();
+            } catch (SessionNotCreatedException | IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         final String URL_STRING = "http://127.0.0.1:4723/wd/hub";
         url = new URL(URL_STRING);
 
@@ -36,7 +70,8 @@ public class SetupAppium {
         cap.setCapability("appium:appActivity", APP_ACTIVITY);
 
         driver = new AndroidDriver(url, cap);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+
     }
 
     @AfterTest

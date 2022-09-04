@@ -17,6 +17,12 @@ public class TestCases extends Setup.SetupAppium {
     @Test(priority = 1)
     public void checkCalculatorButtons() {
 
+        // Detect calculator view
+        boolean calculatorDisplayed = driver.findElement(By.id(calculatorView)).isDisplayed();
+        Assert.assertTrue(calculatorDisplayed, "Calculator view is displayed");
+        boolean tabBarDisplayed = driver.findElement(By.id(actionTabBar)).isDisplayed();
+        Assert.assertTrue(tabBarDisplayed, "Calculator view is displayed");
+
         int digitButtonsInCalc = getButtonsNumber("android.widget.TextView");
         int symbolButtons = getButtonsNumber("android.widget.ImageView");
 
@@ -115,5 +121,21 @@ public class TestCases extends Setup.SetupAppium {
         String getExpression = driver.findElement(By.id(expression)).getAttribute("content-desc");
         int parseExpressionToInt = Integer.parseInt(getExpression);
         Assert.assertEquals(parseExpressionToInt, 0);
+    }
+
+    @Test(priority =  8)
+    public void specialCalculations () {
+        driver.findElement(By.id(switchToScienceCalcBtn)).click();
+
+        for (int i = 1; i <= testRepetition; i++) {
+            calculateWithBrackets(getRandomInt(), getRandomInt(), getRandomInt());
+            calculateTrigonometricFunctions();
+            calculateLogarithms();
+            calculatePow(getRandomInt(), getRandomInt());
+            calculateSquareRoot(getRandomInt());
+            calculateFactorial();
+            calculateReciprocal(getRandomInt());
+            calculatePiAndEuler(getRandomInt(), getRandomOperation());
+        }
     }
 }

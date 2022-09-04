@@ -127,6 +127,6 @@ public class Buttons extends Setup.SetupAppium {
      */
     public static void checkIfButtonIsDisplayed (String buttonId) {
         boolean isButtonDisplayed = driver.findElement(By.id(buttonId)).isDisplayed();
-            Assert.assertTrue(isButtonDisplayed,"The button is displayed");
+        Assert.assertTrue(isButtonDisplayed,"The button is displayed");
     }
 }

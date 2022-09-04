@@ -19,9 +19,6 @@ public class Calculations extends Setup.SetupAppium {
     public static void clearCalculator() {
         if (!Objects.equals(driver.findElement(By.id(expression)).getAttribute("content-desc"), "0")) {
             driver.findElement(By.id(btnClear)).click();
-            if (Objects.equals(driver.findElement(By.id(expression)).getAttribute("content-desc"), "0")) {
-                System.out.println("Calculator is cleared");
-            }
         } else {
             System.out.println("Calculator has already been reset");
         }
@@ -48,8 +45,8 @@ public class Calculations extends Setup.SetupAppium {
      * Calculate two terms using MIUI calculator and Java. After that compare results between Java calculation and
      * MIUI calculator.
      *
-     * @param termOne  - Term one.
-     * @param termTwo  - Term two.
+     * @param termOne  - Input int for term one.
+     * @param termTwo  - Input int for term two.
      * @param operator - Use the following operators: +, -, *, /.
      */
     public static void calculateTwoNumbers(int termOne, int termTwo, String operator) {
@@ -84,6 +81,288 @@ public class Calculations extends Setup.SetupAppium {
         driver.findElement(By.id(btnEquals)).click();
 
         // Compare results between Java calculation and MIUI calculator
+        compareResults(javaResult);
+    }
+
+    /**
+     * Calculate Pi
+     *
+     * @param term - Int input
+     * @param operator - Use the following operators: +, -, *, /.
+     */
+    public static void calculatePiAndEuler(int term, String operator) {
+        double javaResultForPi;
+        double javaResultForEulerNumber;
+        clearCalculator();
+        switch (operator) {
+            case "+" -> {
+                // Calculate Pi
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnPlus)).click();
+                driver.findElement(By.id(btnPi)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForPi = term + Math.PI;
+                compareResults(javaResultForPi);
+
+                // Calculate Euler's number
+                clearCalculator();
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnPlus)).click();
+                driver.findElement(By.id(btnEuler)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForEulerNumber = term + Math.exp(1);
+                compareResults(javaResultForEulerNumber);
+            }
+            case "-" -> {
+                // Calculate Pi
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnMinus)).click();
+                driver.findElement(By.id(btnPi)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForPi = term - Math.PI;
+                compareResults(javaResultForPi);
+
+                // Calculate Euler's number
+                clearCalculator();
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnMinus)).click();
+                driver.findElement(By.id(btnEuler)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForEulerNumber = term - Math.exp(1);
+                compareResults(javaResultForEulerNumber);
+
+            }
+            case "*" -> {
+                // Calculate Pi
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnMultiply)).click();
+                driver.findElement(By.id(btnPi)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForPi = term * Math.PI;
+                compareResults(javaResultForPi);
+
+                // Calculate Euler's number
+                clearCalculator();
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnMultiply)).click();
+                driver.findElement(By.id(btnEuler)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForEulerNumber = term * Math.exp(1);
+                compareResults(javaResultForEulerNumber);
+            }
+            case "/" -> {
+                // Calculate Pi
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnDivide)).click();
+                driver.findElement(By.id(btnPi)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForPi = term / Math.PI;
+                compareResults(javaResultForPi);
+
+                // Calculate Euler's number
+                clearCalculator();
+                clickBtnDigit(term);
+                driver.findElement(By.id(btnDivide)).click();
+                driver.findElement(By.id(btnEuler)).click();
+                driver.findElement(By.id(btnEquals)).click();
+                javaResultForEulerNumber = term / Math.exp(1);
+                compareResults(javaResultForEulerNumber);
+            }
+        }
+    }
+
+    /**
+     * Calculate Pi
+     *
+     * @param term - Int input
+     */
+    public static void calculateReciprocal(int term) {
+        double javaResult;
+        clearCalculator();
+
+        // Calculate with Calculator
+        clickBtnDigit(term);
+        driver.findElement(By.id(btnReciprocal)).click();
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = 1.0 / term;
+        compareResults(javaResult);
+    }
+
+    /**
+     * Calculate Factorial
+     */
+    public static void calculateFactorial() {
+        int factorial = 1;
+
+        // Get random number and parse it to int
+        Random random = new Random();
+        int randomNumbers = random.nextInt(10) ;
+
+        int number;
+        clearCalculator();
+
+        // Calculate with Calculator
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnFactorial)).click();
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        number = randomNumbers;
+
+        for (int i = 1; i <= number ; i++) {
+            factorial = factorial * i;
+        }
+
+        compareResults(factorial);
+    }
+
+    /**
+     * Calculate Factorial
+     *
+     * @param term - Int input
+     */
+
+    public static void calculateSquareRoot (int term) {
+        double javaResult;
+        clearCalculator();
+
+        // Calculate with Calculator
+        driver.findElement(By.id(btnSqrt)).click();
+        clickBtnDigit(term);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = Math.sqrt(term);
+        compareResults(javaResult);
+    }
+
+    /**
+     * Calculate Pow
+     *
+     * @param termOne  - Input int for term one.
+     * @param termTwo  - Input int for term two.
+     */
+    public static void calculatePow (int termOne, int termTwo) {
+        double javaResult;
+        clearCalculator();
+
+        // Calculate with Calculator
+        clickBtnDigit(termOne);
+        driver.findElement(By.id(btnPow)).click();
+        clickBtnDigit(termTwo);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = Math.pow(termOne, termTwo);
+
+        //Compare results
+        compareResults(javaResult);
+    }
+
+    /**
+     * Calculate logarithms
+     */
+    public static void calculateLogarithms () {
+
+        clearCalculator();
+        Random random = new Random();
+        int randomNumbers = random.nextInt(1000);
+
+        // Calculate using logarithm
+        // Calculate with Calculator
+        driver.findElement(By.id(btnLogarithm)).click();
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        double javaResult = Math.log10(randomNumbers);
+
+        //Compare results
+        compareResults(javaResult);
+
+        // Calculate using natural logarithm
+        // Calculate with Calculator
+        clearCalculator();
+        driver.findElement(By.id(btnNaturalLog)).click();
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = Math.log(randomNumbers);
+
+        //Compare results
+        compareResults(javaResult);
+    }
+
+    /**
+     * Calculate Trigonometric Functions
+     */
+    public static void calculateTrigonometricFunctions() {
+
+        // Calculate sin
+        clearCalculator();
+        Random random = new Random();
+        int randomNumbers = random.nextInt(360);
+
+        // Calculate with Calculator
+        driver.findElement(By.id(btnSin)).click();
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        double javaResult = Math.sin(randomNumbers);
+        compareResults(javaResult);
+
+
+        // Calculate cos
+        clearCalculator();
+        driver.findElement(By.id(btnCos)).click();
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = Math.cos(randomNumbers);
+        compareResults(javaResult);
+
+
+        // Calculate tan
+        clearCalculator();
+        driver.findElement(By.id(btnTangent)).click();
+        clickBtnDigit(randomNumbers);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = Math.tan(randomNumbers);
+        compareResults(javaResult);
+    }
+
+    /**
+     * Calculate with brackets
+     *
+     * @param termOne  - Input int for Input int for term one.
+     * @param termTwo  - Input int for term two.
+     * @param termThree - Input int for term three
+     */
+    public static void calculateWithBrackets(int termOne, int termTwo, int termThree) {
+        double javaResult;
+        clearCalculator();
+
+        // Calculate with calculator
+        driver.findElement(By.id(btnLeftParenthesis)).click();
+        clickBtnDigit(termOne);
+        driver.findElement(By.id(btnPlus)).click();
+        clickBtnDigit(termTwo);
+        driver.findElement(By.id(btnRightParenthesis)).click();
+        driver.findElement(By.id(btnMultiply)).click();
+        clickBtnDigit(termThree);
+        driver.findElement(By.id(btnEquals)).click();
+
+        // Calculate with Java
+        javaResult = (termOne + termTwo) * termThree;
+
+        // Compare results
         compareResults(javaResult);
     }
 
@@ -171,7 +450,7 @@ public class Calculations extends Setup.SetupAppium {
     }
 
     /**
-     * Compare results between Java calculation and MIUI calculator..
+     * Compare results between Java calculation and MIUI calculator.
      *
      * @param javaResult - Result from Java calculations. It's compared to result from MIUI Calculator
      */

@@ -39,7 +39,6 @@ public class MobileElementsIDs {
     public static final String converterTabBtn = "com.miui.calculator:id/iv_tab_life";
     public static final String financeTabBtn = "com.miui.calculator:id/iv_tab_finance";
     public static final String moreOptionsBtn = "com.miui.calculator:id/ic_cal_more";
-    public static final String calcListView = "com.miui.calculator:id/listView";
     public static final String actionTabBar = "com.miui.calculator:id/action_bar_tab";
     public static final String calculatorView = "com.miui.calculator:id/lyt_calculator";
 }
