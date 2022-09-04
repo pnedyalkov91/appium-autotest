@@ -22,9 +22,6 @@ public class SetupAppium {
     public static DesiredCapabilities cap;
     public static AndroidDriver driver;
 
-    public static void main(String[] args) {
-        System.out.printf(SystemUtils.OS_NAME);
-    }
     @BeforeTest
     public void setupAppiumDriver() throws MalformedURLException {
 
