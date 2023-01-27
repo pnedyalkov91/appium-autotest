@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -8,10 +8,10 @@ import java.time.Duration;
 import java.util.Objects;
 import java.util.Random;
 
-import static Constants.MobileElementsIDs.*;
-import static Utils.Buttons.clickBtnDigit;
+import static constants.MobileElementsIDs.*;
+import static utils.Buttons.clickBtnDigit;
 
-public class Calculations extends Setup.SetupAppium {
+public class Calculations extends setup.SetupAppium {
 
 
     /**

@@ -1,4 +1,4 @@
-package Utils;
+package utils;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -7,11 +7,11 @@ import org.testng.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Constants.MobileElementsIDs.*;
-import static Constants.TestConstants.digitsInCalculator;
-import static Utils.Calculations.*;
+import static constants.MobileElementsIDs.*;
+import static constants.TestConstants.digitsInCalculator;
+import static utils.Calculations.*;
 
-public class Buttons extends Setup.SetupAppium {
+public class Buttons extends setup.SetupAppium {
 
     /**
      * Transform input data from btnNum and click on digit buttons. For example: Our input is 12345 and this method

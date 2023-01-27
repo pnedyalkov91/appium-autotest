@@ -1,4 +1,4 @@
-package Setup;
+package setup;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.commons.lang3.SystemUtils;
@@ -13,7 +13,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.util.Objects;
 
-import static Constants.AppiumCapabilities.*;
+import static constants.AppiumCapabilities.*;
 
 
 public class SetupAppium {

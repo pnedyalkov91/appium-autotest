@@ -1,4 +1,4 @@
-package Test;
+package test;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
@@ -6,12 +6,12 @@ import org.testng.annotations.Test;
 
 import java.util.Random;
 
-import static Constants.MobileElementsIDs.*;
-import static Constants.TestConstants.testRepetition;
-import static Utils.Buttons.*;
-import static Utils.Calculations.*;
+import static constants.MobileElementsIDs.*;
+import static constants.TestConstants.testRepetition;
+import static utils.Buttons.*;
+import static utils.Calculations.*;
 
-public class TestCases extends Setup.SetupAppium {
+public class TestCases extends setup.SetupAppium {
 
     @Test(priority = 1)
     public void checkCalculatorButtons() {
