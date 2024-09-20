@@ -15,6 +15,4 @@ public class SplashScreenTest {
         Application.launch("Splash");
         SplashScreen.verifySplashScreen();
     }
-
-
 }

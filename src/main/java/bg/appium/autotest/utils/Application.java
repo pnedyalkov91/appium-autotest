@@ -18,7 +18,7 @@ public class Application {
 
     @BeforeTest
     public static void launch(String activity) throws NoAppActivityFound {
-        startNewAppiumSession();
+        // startNewAppiumSession();
         capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("appium:automationName", "UiAutomator2");
