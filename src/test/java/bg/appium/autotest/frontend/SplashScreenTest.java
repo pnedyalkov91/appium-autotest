@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SplashScreenTest {
 
     @Test
-    public void checkSplashScreen() throws NoAppActivityFound, IOException {
+    public void checkSplashScreen() throws NoAppActivityFound, IOException, InterruptedException {
         Application.launch("Splash");
         SplashScreen.verifySplashScreen();
     }

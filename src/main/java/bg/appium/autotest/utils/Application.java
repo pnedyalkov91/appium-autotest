@@ -10,15 +10,14 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-import static bg.appium.autotest.core.AppiumSettings.startNewAppiumSession;
+import java.io.IOException;
 
 public class Application {
     public static AndroidDriver driver;
     protected static DesiredCapabilities capabilities;
 
     @BeforeTest
-    public static void launch(String activity) throws NoAppActivityFound {
-        // startNewAppiumSession();
+    public static void launch(String activity) throws NoAppActivityFound, IOException, InterruptedException {
         capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("appium:automationName", "UiAutomator2");
@@ -44,6 +43,6 @@ public class Application {
 
     @AfterTest
     public static void quit() {
-        driver.quit();
+         driver.quit();
     }
 }
