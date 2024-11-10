@@ -1,8 +1,8 @@
 package bg.appium.autotest.pages;
 
-import bg.appium.autotest.utils.ScreenshotHelper;
-
 import java.io.IOException;
+
+import static bg.appium.autotest.utils.ScreenshotUtils.*;
 
 /**
  * The SplashScreen class represents the splash screen page of the mobile application
@@ -19,9 +19,9 @@ public class SplashScreen {
      * @throws IOException If an I/O error occurs while handling screenshots.
      */
     public static void verifySplashScreen() throws IOException {
-        ScreenshotHelper.takeScreenshotFromMobileScreen(ACTUAL_SCREENSHOT_NAME);
-        ScreenshotHelper.compareScreenshots(ACTUAL_SCREENSHOT_NAME, EXPECTED_SCREENSHOT_NAME);
-        ScreenshotHelper.deleteScreenshot(ACTUAL_SCREENSHOT_NAME);
+        takeScreenshotFromMobileScreen(ACTUAL_SCREENSHOT_NAME);
+        compareScreenshots(ACTUAL_SCREENSHOT_NAME, EXPECTED_SCREENSHOT_NAME);
+        deleteScreenshot(ACTUAL_SCREENSHOT_NAME);
     }
 
 

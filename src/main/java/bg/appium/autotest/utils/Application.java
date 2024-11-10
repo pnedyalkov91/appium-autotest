@@ -15,6 +15,7 @@ import java.io.IOException;
 public class Application {
     public static AndroidDriver driver;
     protected static DesiredCapabilities capabilities;
+    public static String appiumPlugin;
 
     @BeforeTest
     public static void launch(String activity) throws NoAppActivityFound, IOException, InterruptedException {
@@ -33,6 +34,8 @@ public class Application {
                 onboardingActivity.launchActivity();
                 break;
             case "Splash":
+                appiumPlugin = "images";
+                AppiumServer.start();
                 Activity splashActivity = new SplashActivity();
                 splashActivity.launchActivity();
                 break;
@@ -42,7 +45,10 @@ public class Application {
     }
 
     @AfterTest
-    public static void quit() {
-         driver.quit();
+    public static void quit() throws IOException {
+        if (driver != null) {
+            driver.quit();
+        }
+        AppiumServer.stop();
     }
 }

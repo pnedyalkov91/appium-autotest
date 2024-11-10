@@ -18,7 +18,7 @@ import static bg.appium.autotest.utils.Application.driver;
 /**
  * Utility class for taking and managing screenshots in an Appium test environment.
  */
-public class ScreenshotHelper {
+public class ScreenshotUtils {
 
     private static final Path SCREENSHOTS_DIRECTORY = Paths.get("src", "test", "resources", "screenshots");
     private static final double SIMILARITY_THRESHOLD = 0.01;
