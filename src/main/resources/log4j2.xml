@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <property name="filePattern">${date:dd-MM-yyyy-HH_mm_ss}</property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="File" fileName=".logs/appium-autotest-${filePattern}.log" append="false">
+            <PatternLayout pattern="%d{dd-MM-yyyy HH:mm:ss} %-5p %c{1} - %m%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+    </Loggers>
+</Configuration>
