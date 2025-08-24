@@ -1,6 +1,7 @@
 package bg.appium.autotest.utils;
 
 import bg.appium.autotest.utils.appium.AppiumServer;
+import bg.appium.autotest.utils.driver.DriverManager;
 import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,7 +43,7 @@ public class Application {
             Application.install();
         }
 
-        driver = new AndroidDriver(AppiumServer.getUrl(), capabilities);
+        DriverManager.setDriver(capabilities);
     }
 
     /**
@@ -88,7 +89,7 @@ public class Application {
      */
     @AfterTest
     public static void quit() {
-        driver.quit();
+        DriverManager.quitDriver();
         AppiumServer.stop();
     }
 }
