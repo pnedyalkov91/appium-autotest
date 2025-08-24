@@ -1,5 +1,6 @@
 package bg.appium.autotest.utils;
 
+import bg.appium.autotest.utils.driver.DriverManager;
 import io.appium.java_client.imagecomparison.SimilarityMatchingOptions;
 import io.appium.java_client.imagecomparison.SimilarityMatchingResult;
 import org.apache.commons.io.FileUtils;
@@ -44,7 +45,7 @@ public class ScreenshotUtils {
      * @throws IOException If an I/O error occurs.
      */
     public static void takeScreenshotFromMobileScreen(String screenshotName) throws IOException {
-        File srcFile = driver.getScreenshotAs(OutputType.FILE);
+        File srcFile = DriverManager.getDriver().getScreenshotAs(OutputType.FILE);
         Path destPath = SCREENSHOTS_DIRECTORY.resolve(screenshotName);
         FileUtils.copyFile(srcFile, destPath.toFile());
     }
@@ -77,7 +78,7 @@ public class ScreenshotUtils {
         Path expectedPath = SCREENSHOTS_DIRECTORY.resolve(expectedScreenshot);
 
         SimilarityMatchingOptions options = new SimilarityMatchingOptions().withEnabledVisualization();
-        SimilarityMatchingResult result = driver.getImagesSimilarity(expectedPath.toFile(), actualPath.toFile(), options);
+        SimilarityMatchingResult result = DriverManager.getDriver().getImagesSimilarity(expectedPath.toFile(), actualPath.toFile(), options);
 
         Assert.assertTrue(result.getScore() > SIMILARITY_THRESHOLD, "Similarity result is: " + result.getScore());
     }
