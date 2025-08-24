@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.io.IoBuilder;
 
 import java.net.URL;
+import java.time.Duration;
 
 /**
  *
@@ -73,6 +74,7 @@ public class AppiumServer {
      */
     private static AppiumServiceBuilder setAppiumConfiguration() {
         return new AppiumServiceBuilder()
+                .withTimeout(Duration.ofSeconds(60))
                 .withIPAddress("127.0.0.1")
                 .usingAnyFreePort()
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "debug:error")
