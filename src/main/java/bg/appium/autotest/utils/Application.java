@@ -2,7 +2,6 @@ package bg.appium.autotest.utils;
 
 import bg.appium.autotest.utils.appium.AppiumServer;
 import bg.appium.autotest.utils.driver.DriverManager;
-import io.appium.java_client.android.AndroidDriver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -21,7 +20,6 @@ public class Application {
 
     private static final Logger logger = LogManager.getLogger(Application.class);
 
-    public static AndroidDriver driver;
     private static final DesiredCapabilities capabilities = new DesiredCapabilities();
 
 

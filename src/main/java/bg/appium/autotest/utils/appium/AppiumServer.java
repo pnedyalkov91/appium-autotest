@@ -78,6 +78,7 @@ public class AppiumServer {
                 .withIPAddress("127.0.0.1")
                 .usingAnyFreePort()
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "debug:error")
+                .withArgument(GeneralServerFlag.USE_PLUGINS, "all")
                 .withArgument(GeneralServerFlag.LOG_NO_COLORS);
     }
 }
