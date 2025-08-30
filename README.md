@@ -39,4 +39,11 @@ npm install -g appium
 ```sh
 appium setup
 ```
-For advanced setup, refer to the official documentation: https://appium.io/docs/en/latest/intro/
+
+### 3️⃣ Install Allure Report tool (macOS or Linux)
+```sh
+brew install allure
+```
+
+- For setting up `brew` on macOS or Linux, refer to the [official documentation](https://brew.sh/).
+- For advanced Appium setup, refer to the [official documentation](https://appium.io/docs/en/latest/intro/).
